@@ -16,10 +16,6 @@ limitations under the License.
 
 use std::error::Error;
 
-pub fn err(s: &str) -> Box<Error> {
-    Box::<Error + Send + Sync>::from(s)
-}
-
 /// Trait for clipboard access
 pub trait ClipboardProvider: Sized {
     /// Create a context with which to access the clipboard
