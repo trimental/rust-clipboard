@@ -18,9 +18,6 @@ use std::error::Error;
 
 /// Trait for clipboard access
 pub trait ClipboardProvider: Sized {
-    /// Create a context with which to access the clipboard
-    // TODO: consider replacing Box<Error> with an associated type?
-    fn new() -> Result<Self, Box<Error>>;
     /// Method to get the clipboard contents as a String
     fn get_contents(&mut self) -> Result<String, Box<Error>>;
     /// Method to set the clipboard contents as a String

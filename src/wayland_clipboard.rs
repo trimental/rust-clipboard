@@ -33,7 +33,7 @@ impl WaylandClipboardContext {
     /// will always fail since a Display is required for the Wayland clipboard.
     ///
     /// [`ClipboardProvider::new`]: ../trait.ClipboardProvider.html
-    pub fn with_display(display: &Display) -> Self {
+    pub fn new(display: &Display) -> Self {
         WaylandClipboardContext {
             clip: WaylandClipboard::new_threaded(display),
         }
@@ -41,10 +41,6 @@ impl WaylandClipboardContext {
 }
 
 impl ClipboardProvider for WaylandClipboardContext {
-    fn new() -> Result<Self, Box<Error>> {
-        Err("wayland clipboard can't be created generically".into())
-    }
-
     fn get_contents(&mut self) -> Result<String, Box<Error>> {
         Ok(self.clip.load("seat0"))
     }

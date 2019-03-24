@@ -19,10 +19,13 @@ use std::error::Error;
 
 pub struct NopClipboardContext;
 
-impl ClipboardProvider for NopClipboardContext {
-    fn new() -> Result<NopClipboardContext, Box<Error>> {
+impl NopClipboardContext {
+    pub fn new() -> Result<NopClipboardContext, Box<Error>> {
         Ok(NopClipboardContext)
     }
+}
+
+impl ClipboardProvider for NopClipboardContext {
     fn get_contents(&mut self) -> Result<String, Box<Error>> {
         println!("Attempting to get the contents of the clipboard, which hasn't yet been \
                   implemented on this platform.");

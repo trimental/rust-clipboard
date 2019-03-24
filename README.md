@@ -21,11 +21,10 @@ sudo apt-get install xorg-dev
 ```rust
 extern crate clipboard;
 
-use clipboard::ClipboardProvider;
 use clipboard::ClipboardContext;
 
 fn example() {
-    let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
+    let mut ctx = ClipboardContext::new().unwrap();
     println!("{:?}", ctx.get_contents());
     ctx.set_contents("some string".to_owned()).unwrap();
 }
@@ -36,7 +35,6 @@ fn example() {
 The `ClipboardProvider` trait has the following functions:
 
 ```rust
-fn new() -> Result<Self, Box<Error>>;
 fn get_contents(&mut self) -> Result<String, Box<Error>>;
 fn set_contents(&mut self, String) -> Result<(), Box<Error>>;
 ```

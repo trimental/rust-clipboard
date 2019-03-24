@@ -4,7 +4,7 @@ use clipboard::ClipboardProvider;
 use clipboard::ClipboardContext;
 
 fn main() {
-    let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
+    let mut ctx = ClipboardContext::new().unwrap();
 
     let the_string = "Hello, world!";
 

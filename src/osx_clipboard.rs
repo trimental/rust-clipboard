@@ -30,8 +30,8 @@ pub struct OSXClipboardContext {
 #[link(name = "AppKit", kind = "framework")]
 extern "C" {}
 
-impl ClipboardProvider for OSXClipboardContext {
-    fn new() -> Result<OSXClipboardContext, Box<Error>> {
+impl OSXClipboardContext {
+    pub fn new() -> Result<OSXClipboardContext, Box<Error>> {
         let cls = try!(Class::get("NSPasteboard").ok_or(err("Class::get(\"NSPasteboard\")")));
         let pasteboard: *mut Object = unsafe { msg_send![cls, generalPasteboard] };
         if pasteboard.is_null() {
@@ -40,6 +40,9 @@ impl ClipboardProvider for OSXClipboardContext {
         let pasteboard: Id<Object> = unsafe { Id::from_ptr(pasteboard) };
         Ok(OSXClipboardContext { pasteboard: pasteboard })
     }
+}
+
+impl ClipboardProvider for OSXClipboardContext {
     fn get_contents(&mut self) -> Result<String, Box<Error>> {
         let string_class: Id<NSObject> = {
             let cls: Id<Class> = unsafe { Id::from_ptr(class("NSString")) };
