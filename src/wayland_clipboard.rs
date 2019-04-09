@@ -17,7 +17,7 @@ limitations under the License.
 use std::error::Error;
 
 use smithay_clipboard::WaylandClipboard;
-use smithay_client_toolkit::reexports::client::Display;
+use wayland_client::Display;
 
 use common::ClipboardProvider;
 

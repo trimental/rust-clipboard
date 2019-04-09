@@ -24,7 +24,7 @@ extern crate x11_clipboard as x11_clipboard_crate;
 #[cfg(all(unix, not(any(target_os="macos", target_os="android", target_os="emscripten"))))]
 extern crate smithay_clipboard;
 #[cfg(all(unix, not(any(target_os="macos", target_os="android", target_os="emscripten"))))]
-extern crate smithay_client_toolkit;
+extern crate wayland_client;
 
 #[cfg(windows)]
 extern crate clipboard_win;
