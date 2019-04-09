@@ -17,7 +17,7 @@ limitations under the License.
 use std::error::Error;
 
 /// Trait for clipboard access
-pub trait ClipboardProvider {
+pub trait ClipboardProvider: Send {
     /// Method to get the clipboard contents as a String
     fn get_contents(&mut self) -> Result<String, Box<Error>>;
     /// Method to set the clipboard contents as a String

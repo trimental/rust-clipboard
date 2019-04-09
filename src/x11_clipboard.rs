@@ -22,7 +22,7 @@ use x11_clipboard_crate::Atoms;
 use x11_clipboard_crate::Clipboard as X11Clipboard;
 use x11_clipboard_crate::xcb::xproto::Atom;
 
-pub trait Selection {
+pub trait Selection: Send {
     fn atom(atoms: &Atoms) -> Atom;
 }
 
