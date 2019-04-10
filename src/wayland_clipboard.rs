@@ -15,9 +15,11 @@ limitations under the License.
 */
 
 use std::error::Error;
+use std::ffi::c_void;
 
 use smithay_clipboard::WaylandClipboard;
 use wayland_client::Display;
+use wayland_client::sys::client::wl_display;
 
 use common::ClipboardProvider;
 
@@ -28,14 +30,16 @@ pub struct WaylandClipboardContext {
 
 impl WaylandClipboardContext {
     /// Create a new clipboard context.
-    ///
-    /// This is the only way to create a new Wayland clipboard. Calling [`ClipboardProvider::new`]
-    /// will always fail since a Display is required for the Wayland clipboard.
-    ///
-    /// [`ClipboardProvider::new`]: ../trait.ClipboardProvider.html
     pub fn new(display: &Display) -> Self {
         WaylandClipboardContext {
             clip: WaylandClipboard::new_threaded(display),
+        }
+    }
+
+    /// Create a new clipboard context from an external pointer.
+    pub unsafe fn new_from_external(display: *mut c_void) -> Self {
+        WaylandClipboardContext {
+            clip: WaylandClipboard::new_threaded_from_external(display as *mut wl_display),
         }
     }
 }
