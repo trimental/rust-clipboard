@@ -19,3 +19,7 @@ objc-foundation = "0.1"
 x11-clipboard = "0.3"
 smithay-clipboard = "0.1"
 wayland-client = { version = "0.22", features = ["dlopen"] }
+
+[dev-dependencies]
+andrew = "*"
+smithay-client-toolkit = "0.5"
