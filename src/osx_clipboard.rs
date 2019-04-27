@@ -32,7 +32,7 @@ extern "C" {}
 
 impl OSXClipboardContext {
     pub fn new() -> Result<OSXClipboardContext, Box<Error>> {
-        let cls = try!(Class::get("NSPasteboard").ok_or(err("Class::get(\"NSPasteboard\")")));
+        let cls = try!(Class::get("NSPasteboard").ok_or(Err("Class::get(\"NSPasteboard\")")));
         let pasteboard: *mut Object = unsafe { msg_send![cls, generalPasteboard] };
         if pasteboard.is_null() {
             return Err("NSPasteboard#generalPasteboard returned null");
@@ -54,12 +54,12 @@ impl ClipboardProvider for OSXClipboardContext {
             let obj: *mut NSArray<NSString> =
                 msg_send![self.pasteboard, readObjectsForClasses:&*classes options:&*options];
             if obj.is_null() {
-                return Err("pasteboard#readObjectsForClasses:options: returned null");
+                return Err("pasteboard#readObjectsForClasses:options: returned null".into());
             }
             Id::from_ptr(obj)
         };
         if string_array.count() == 0 {
-            Err("pasteboard#readObjectsForClasses:options: returned empty")
+            Err("pasteboard#readObjectsForClasses:options: returned empty".into())
         } else {
             Ok(string_array[0].as_str().to_owned())
         }
@@ -71,7 +71,7 @@ impl ClipboardProvider for OSXClipboardContext {
         return if success {
             Ok(())
         } else {
-            Err("NSPasteboard#writeObjects: returned false")
+            Err("NSPasteboard#writeObjects: returned false".into())
         };
     }
 }
