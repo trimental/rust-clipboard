@@ -46,11 +46,11 @@ impl WaylandClipboardContext {
 
 impl ClipboardProvider for WaylandClipboardContext {
     fn get_contents(&mut self) -> Result<String, Box<Error>> {
-        Ok(self.clip.load("seat0"))
+        Ok(self.clip.load(None))
     }
 
     fn set_contents(&mut self, data: String) -> Result<(), Box<Error>> {
-        self.clip.store("seat0".into(), data);
+        self.clip.store(None, data);
         Ok(())
     }
 }
