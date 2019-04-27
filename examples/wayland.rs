@@ -14,7 +14,7 @@ use sctk::utils::{DoubleMemPool, MemPool};
 use sctk::window::{ConceptFrame, Event as WEvent, Window};
 use sctk::Environment;
 
-use sctk::reexports::client::protocol::{wl_seat, wl_shm, wl_surface};
+use sctk::reexports::client::protocol::{wl_shm, wl_surface};
 use sctk::reexports::client::{Display, NewProxy};
 
 use andrew::shapes::rectangle;
@@ -29,20 +29,9 @@ fn main() {
     let mut ctx = WaylandClipboardContext::new(&display);
     let cb_contents = Arc::new(Mutex::new(String::new()));
 
-    let seat_name = Arc::new(Mutex::new(String::new()));
-    let seat_name_clone = seat_name.clone();
     let seat = env
         .manager
-        .instantiate_range(2, 6, move |proxy| {
-            proxy.implement_closure(
-                move |event, _| {
-                    if let wl_seat::Event::Name { name } = event {
-                        *seat_name_clone.lock().unwrap() = name
-                    }
-                },
-                (),
-            )
-        })
+        .instantiate_range(2, 6, NewProxy::implement_dummy)
         .unwrap();
 
     let need_redraw = Arc::new(atomic::AtomicBool::new(false));
