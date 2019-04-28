@@ -32,10 +32,10 @@ extern "C" {}
 
 impl OSXClipboardContext {
     pub fn new() -> Result<OSXClipboardContext, Box<Error>> {
-        let cls = try!(Class::get("NSPasteboard").ok_or(Err("Class::get(\"NSPasteboard\")")));
+        let cls = Class::get("NSPasteboard").ok_or("Class::get(\"NSPasteboard\")")?;
         let pasteboard: *mut Object = unsafe { msg_send![cls, generalPasteboard] };
         if pasteboard.is_null() {
-            return Err("NSPasteboard#generalPasteboard returned null");
+            return Err("NSPasteboard#generalPasteboard returned null".into());
         }
         let pasteboard: Id<Object> = unsafe { Id::from_ptr(pasteboard) };
         Ok(OSXClipboardContext { pasteboard: pasteboard })
